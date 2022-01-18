@@ -1,3 +1,3 @@
 # ELECTRIcity
 
-Todo
+TODO
