@@ -1,5 +1,7 @@
-import argparse
-from config import *
+# import argparse
+from config        import *
+from UKDALE_Parser import *
+from REDD_Parser   import *
 
 if __name__ == "__main__":
 
@@ -7,12 +9,12 @@ if __name__ == "__main__":
     setup_seed(args.seed)
 
 
-    # if args.dataset_code == 'redd_lf':
-    #     args.house_indicies = [2, 3, 4, 5, 6]
-    #     ds_parser = REDD_Parser(args)
-    # elif args.dataset_code == 'uk_dale':
-    #     args.house_indicies = [1, 3, 4, 5]
-    #     ds_parser = UKDALE_Parser(args)
+    if args.dataset_code == 'redd_lf':
+        args.house_indicies = [2, 3, 4, 5, 6]
+        ds_parser = Redd_Parser(args)
+    elif args.dataset_code == 'uk_dale':
+        args.house_indicies = [1, 3, 4, 5]
+        ds_parser = UK_Dale_Parser(args)
 
     # model = ELECTRICITY(args)
     # trainer = Trainer(args,model,stats) #is stats necessary?

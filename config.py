@@ -11,13 +11,23 @@ def get_args():
     parser.add_argument('--seed',            type = int,   default = 0)
     parser.add_argument('--device',          type = str,   default = 'cpu' ,    choices=['cpu', 'cuda'])
 
-    parser.add_argument('--dataset_code',     type = str,   default = 'uk_dale', choices=['redd_lf', 'uk_dale'])
-    parser.add_argument('--house_indicies',   type = list,  default = [1, 2, 3, 4, 5])
-
+    parser.add_argument('--dataset_code',    type = str,   default = 'uk_dale', choices=['redd_lf', 'uk_dale'])
+    parser.add_argument('--house_indicies',  type = list,  default = [1, 2, 3, 4, 5])
 
     # REDD Dataset appliance names:    'refrigerator', 'washer_dryer',   'microwave','dishwasher'
     # UK Dale Dataset appliance names: 'fridge',       'washing_machine','microwave','dishwasher','kettle'
-    parser.add_argument('--appliance_names',  type = list,  default = ['washing_machine'])
+    parser.add_argument('--appliance_names', type = list,  default = ['washing_machine'])
+    
+    args = parser.parse_args()
+
+    # args.ukdale_location = 'data/uk_dale'
+    # args.redd_location   = 'data/redd'
+    args.ukdale_location = '/Volumes/WD 2TB/PhD Datasets/Cleaned/Energy/UK_Dale'
+    args.redd_location   = '/Volumes/WD 2TB/PhD Datasets/Cleaned/Energy/REDD'
+
+    return args
+
+
 
 
 
