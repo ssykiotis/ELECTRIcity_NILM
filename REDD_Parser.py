@@ -1,6 +1,8 @@
 import numpy  as np
 import pandas as pd
 from pathlib import Path
+from collections import defaultdict
+
 
 class Redd_Parser:
 
@@ -40,7 +42,7 @@ class Redd_Parser:
         for house_id in self.house_indicies:
             assert house_id in [1, 2, 3, 4, 5, 6]
 
-            directory = Path(self.data_location).joinpath('redd_lf')  
+            directory = Path(self.data_location) 
 
             for house_id in self.house_indicies:
                 house_folder = directory.joinpath('house_' + str(house_id))
@@ -56,13 +58,10 @@ class Redd_Parser:
                 app_index_dict = defaultdict(list)
 
                 for appliance in self.appliance_names:
-                    data_found = False
-                    for i in range(len(appliance_list)):
-                        if appliance_list[i] == appliance:
-                            app_index_dict[appliance].append(i + 1)
-                            data_found = True
-
-                    if not data_found:
+                    try:
+                        idx = appliance_list.tolist().index(appliance)
+                        app_index_dict[appliance].append(idx+1)
+                    except ValueError:
                         app_index_dict[appliance].append(-1)
 
                 if np.sum(list(app_index_dict.values())) == -len(self.appliance_names):
@@ -87,20 +86,20 @@ class Redd_Parser:
 
                     house_data = pd.merge(house_data, temp_data, how='inner', on=0)
 
-                house_data.iloc[:, 0] = pd.to_datetime(house_data.iloc[:, 0], unit='s')
-                house_data.columns    = ['time', 'aggregate'] + [i for i in self.appliance_names]
-                house_data            = house_data.set_index('time')
-                house_data            = house_data.resample(self.sampling).mean().fillna(method='ffill', limit=30)
+                    house_data.iloc[:, 0] = pd.to_datetime(house_data.iloc[:, 0], unit='s')
+                    house_data.columns    = ['time', 'aggregate'] + [i for i in self.appliance_names]
+                    house_data            = house_data.set_index('time')
+                    house_data            = house_data.resample(self.sampling).mean().fillna(method='ffill', limit=30)
 
-                if house_id == self.house_indicies[0]:
-                    entire_data = house_data
-                else:
-                    entire_data = entire_data.append(house_data, ignore_index=True)
+                    if house_id == self.house_indicies[0]:
+                        entire_data = house_data
+                    else:
+                        entire_data = entire_data.append(house_data, ignore_index=True)
 
-                entire_data                  = entire_data.dropna().copy()
-                entire_data                  = entire_data[entire_data['aggregate'] > 0]
-                entire_data[entire_data < 5] = 0
-                entire_data                  = entire_data.clip([0] * len(entire_data.columns), self.cutoff, axis=1)
+                    entire_data                  = entire_data.dropna().copy()
+                    entire_data                  = entire_data[entire_data['aggregate'] > 0]
+                    entire_data[entire_data < 5] = 0
+                    entire_data                  = entire_data.clip([0] * len(entire_data.columns), self.cutoff, axis=1)
 
             return entire_data.values[:, 0], entire_data.values[:, 1:]
     

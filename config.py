@@ -35,8 +35,8 @@ def get_args():
 
     # args.ukdale_location = 'data/uk_dale'
     # args.redd_location   = 'data/redd'
-    args.ukdale_location = '/Volumes/WD 2TB/PhD Datasets/Cleaned/Energy/UK_Dale'
-    args.redd_location   = '/Volumes/WD 2TB/PhD Datasets/Cleaned/Energy/REDD'
+    args.ukdale_location = '/Volumes/WD_2TB/PhD Datasets/Cleaned/Energy/UK_Dale'
+    args.redd_location   = '/Volumes/WD_2TB/PhD Datasets/Cleaned/Energy/REDD'
 
     args = update_preprocessing_parameters(args)
 
