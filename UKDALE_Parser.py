@@ -14,7 +14,7 @@ class UK_Dale_Parser:
     y (n,num_appliances): individual device consumption signals
     """
     
-    def __init__(self,args):
+    def __init__(self,args, stats = None):
         self.data_location   = args.ukdale_location
         self.house_indicies  = args.house_indicies
         self.appliance_names = args.appliance_names
@@ -32,16 +32,23 @@ class UK_Dale_Parser:
 
         
         self.x, self.y     = self.load_data()
+        
         if self.normalize == 'mean':
-          self.x_mean = np.mean(self.x)
-          self.x_std  = np.std(self.x)
-          self.x = (self.x - self.x_mean) / self.x_std
+            if stats is None:
+                self.x_mean = np.mean(self.x)
+                self.x_std  = np.std(self.x)
+            else:
+                self.x_mean,x_std = stats
+            self.x = (self.x - self.x_mean) / self.x_std
         elif self.normalize == 'minmax':
-          self.x_min = min(self.x)
-          self.x_max = max(self.x)
-          self.x = (self.x - self.x_min)/(self.x_max-self.x_min)
+            if stats is None:
+                self.x_min = min(self.x)
+                self.x_max = max(self.x)
+            else:
+                self.x_min,self.x_max = stats
+            self.x = (self.x - self.x_min)/(self.x_max-self.x_min)
             
-        self.status        = self.compute_status(self.y)
+        self.status = self.compute_status(self.y)
     
     def load_data(self):
         

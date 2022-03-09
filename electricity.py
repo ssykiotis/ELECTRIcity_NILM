@@ -4,6 +4,7 @@ from UKDALE_Parser     import *
 from REDD_Parser       import *
 from Electricity_model import *
 from NILM_Dataloader   import *
+from Trainer           import *
 
 
 if __name__ == "__main__":
@@ -20,17 +21,11 @@ if __name__ == "__main__":
         ds_parser = UK_Dale_Parser(args)
 
 
-    dataloader = NILMDataloader(args, ds_parser, pretrain=True)
-
-    train_loader,val_loader = dataloader.get_dataloaders()
-
-
 
 
     model = ELECTRICITY(args)
 
-
-    # trainer = Trainer(args,model,stats) #is stats necessary?
+    trainer = Trainer(args,ds_parser,model)
 
     # #Training Loop
     # start_time = time()
