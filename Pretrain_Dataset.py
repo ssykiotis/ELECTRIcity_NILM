@@ -3,11 +3,10 @@ import random
 import numpy as np
 from   NILM_Dataset import *
 
-
 class Pretrain_Dataset(NILMDataset):
     def __init__(self, x, y, status, window_size=480, stride=30, mask_prob=0.2):
-        self.x = x
-        self.y = y
+        self.x           = x
+        self.y           = y
         self.status      = status
         self.window_size = window_size
         self.stride      = stride
@@ -21,27 +20,15 @@ class Pretrain_Dataset(NILMDataset):
         y       = self.padding_seqs(self.y[start_index: end_index])
         status  = self.padding_seqs(self.status[start_index: end_index])
 
-        tokens  = []
-        labels  = []
-        on_offs = []
-
-        #TODO: Optimize 
         for i in range(len(x)):
             prob = random.random()
-            if prob < self.mask_prob:
+            if prob<self.mask_prob:
                 prob = random.random()
-                if prob < 0.8:
-                    tokens.append(-1)
-                elif prob < 0.9:
-                    tokens.append(np.random.normal())
-                else:
-                    tokens.append(x[i])
-
-                labels.append(y[i])
-                on_offs.append(status[i])
+                x[i] = -1 if prob<0.8 else np.random.normal() if prob<0.9 else x[i]
             else:
-                tokens.append(x[i])
-                temp = np.array([-1])
-                labels.append(temp)
-                on_offs.append(temp)
-        return  torch.Tensor(tokens).unsqueeze(0), torch.Tensor(labels), torch.Tensor(on_offs)
+                y[i]      = -1
+                status[i] = -1
+
+        x, y, status = [torch.Tensor(v).unsqueeze(0) for v in [x,y,status]]
+        
+        return  x, y, status

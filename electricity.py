@@ -24,18 +24,11 @@ if __name__ == "__main__":
 
     train_loader,val_loader = dataloader.get_dataloaders()
 
-    for batch in train_loader:
-        x,y,s = batch
-        print('X Shape')
-        print(x.shape)
-        break
 
 
 
     model = ELECTRICITY(args)
-    test = model(x)
-    print('Electricity out shape:')
-    print(test[0].shape)
+
 
     # trainer = Trainer(args,model,stats) #is stats necessary?
 
