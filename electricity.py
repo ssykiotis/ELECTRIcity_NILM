@@ -18,11 +18,22 @@ if __name__ == "__main__":
         args.house_indicies = [1, 3, 4, 5]
         ds_parser = UK_Dale_Parser(args)
     
+    pretrain_train,pretrain_val = ds_parser.get_petrain_datasets(args.mask_prob)
+    train_train,train_val       = ds_parser.get_train_datasets()
+
+
+
+
+    # dataloader = NILMDataloader(args, ds_parser)
+
+
+
 
     
    
 
-    # model = ELECTRICITY(args)
+    model = ELECTRICITY(args)
+    print('built Model')
     # trainer = Trainer(args,model,stats) #is stats necessary?
 
     # #Training Loop

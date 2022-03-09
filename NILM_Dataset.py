@@ -1,6 +1,6 @@
 import torch
 import torch.utils.data as data_utils
-import numpy as np
+import numpy            as np
 
 
 class NILMDataset(data_utils.Dataset):
@@ -23,10 +23,22 @@ class NILMDataset(data_utils.Dataset):
         status   = self.padding_seqs(self.status[start_index: end_index])
         
 
-        #####MAYBE DONT CONVERT TO TENSORS YET
+        #####TODO: MAYBE DONT CONVERT TO TENSORS YET
         channels = self.y.shape[1]
         x        = torch.Tensor(x).view((1,-1))
         y        = torch.Tensor(y).view((channels,-1))
         status   = torch.Tensor(status).view((channels,-1))
         
         return x, y, status 
+
+
+    def padding_seqs(self, in_array):
+        if len(in_array) == self.window_size:
+            return in_array
+        try:
+            out_array = np.zeros((self.window_size, in_array.shape[1]))
+        except:
+            out_array = np.zeros(self.window_size)
+
+        out_array[:len(in_array)] = in_array
+        return out_array

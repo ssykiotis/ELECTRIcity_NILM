@@ -11,12 +11,12 @@ def get_args():
     parser.add_argument('--seed',            type = int,   default = 0)
     parser.add_argument('--device',          type = str,   default = 'cpu' ,    choices=['cpu', 'cuda'])
 
-    parser.add_argument('--dataset_code',    type = str,   default = 'redd_lf', choices=['redd_lf', 'uk_dale'])
+    parser.add_argument('--dataset_code',    type = str,   default = 'uk_dale', choices=['redd_lf', 'uk_dale'])
     parser.add_argument('--house_indicies',  type = list,  default = [1, 2, 3, 4, 5])
 
     # REDD Dataset appliance names:    'refrigerator', 'washer_dryer',   'microwave','dishwasher'
     # UK Dale Dataset appliance names: 'fridge',       'washing_machine','microwave','dishwasher','kettle'
-    parser.add_argument('--appliance_names', type = list,  default = ['washer_dryer'])
+    parser.add_argument('--appliance_names', type = list,  default = ['washing_machine'])
 
     parser.add_argument('--sampling',        type = str,   default = '6s')
     parser.add_argument('--normalize',       type = str,   default = 'mean',    choices=['mean', 'minmax'])
@@ -32,6 +32,20 @@ def get_args():
     parser.add_argument('--validation_size',     type = float, default = 0.1)
     parser.add_argument('--batch_size',          type = int,   default = 64)
 
+
+    parser.add_argument('--output_size',         type = int,   default = 1)
+    parser.add_argument('--drop_out',            type = float, default = 0.1)
+    parser.add_argument('--hidden',              type = int,   default = 256)
+    parser.add_argument('--heads',               type = int,   default = 2)
+    parser.add_argument('--n_layers',            type = int,   default = 2)
+
+    parser.add_argument('--pretrain',            type = bool,  default = True)
+    parser.add_argument('--mask_prob',           type = float, default = 0.25)
+    parser.add_argument('--pretrain_num_epochs', type = int,   default = 10)
+    parser.add_argument('--num_epochs',          type = int,   default = 90)
+
+
+
     
     args = parser.parse_args()
 
@@ -43,8 +57,8 @@ def get_args():
     args.redd_location   = '/Volumes/WD_2TB/PhD Datasets/Cleaned/Energy/REDD'
 
     #UBUNTU
-    args.ukdale_location = ''
-    args.redd_location   = ''
+    # args.ukdale_location = '/media/stavros/WD_2TB/PhD Datasets/Cleaned/Energy/UK_Dale'
+    # args.redd_location   = '/media/stavros/WD_2TB/PhD Datasets/Cleaned/Energy/REDD'
 
     args = update_preprocessing_parameters(args)
     if torch.cuda.is_available():
