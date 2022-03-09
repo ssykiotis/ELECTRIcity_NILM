@@ -44,4 +44,4 @@ class Pretrain_Dataset(NILMDataset):
                 temp = np.array([-1])
                 labels.append(temp)
                 on_offs.append(temp)
-        return  torch.tensor(tokens).squeeze(), torch.tensor(labels).squeeze(), torch.tensor(on_offs).squeeze()
+        return  torch.Tensor(tokens).unsqueeze(0), torch.Tensor(labels), torch.Tensor(on_offs)

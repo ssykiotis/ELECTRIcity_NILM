@@ -46,7 +46,7 @@ class TransformerModel(nn.Module):
                     p.add_(mean)
     
     def forward(self, sequence):
-        x_token   = self.pool(self.conv(sequence.unsqueeze(1))).permute(0, 2, 1)
+        x_token   = self.pool(self.conv(sequence)).permute(0, 2, 1)
         embedding = x_token + self.position(sequence)
         x = self.dropout(self.layer_norm(embedding))
 
@@ -56,7 +56,7 @@ class TransformerModel(nn.Module):
 
         x = self.deconv(x.permute(0, 2, 1)).permute(0, 2, 1)
         x = torch.tanh(self.linear1(x))
-        x = self.linear2(x)
+        x = self.linear2(x).permute(0,2,1)
         return x
 
 #TODO: unsqueeze to add dimension at 1
@@ -74,12 +74,12 @@ class ELECTRICITY(nn.Module):
 
     def forward(self,sequence,mask=None):
         if self.pretrain:
-            gen_out = self.Generator(sequence).squeeze()
+            gen_out = self.Generator(sequence)
             disc_in = sequence
             disc_in[mask] = gen_out[mask]
         else:
             disc_in = sequence
-        disc_out = self.Discriminator(disc_in).squeeze()
+        disc_out = self.Discriminator(disc_in)
         if self.pretrain:
             return disc_out, gen_out
         else:

@@ -3,6 +3,7 @@ from config            import *
 from UKDALE_Parser     import *
 from REDD_Parser       import *
 from Electricity_model import *
+from NILM_Dataloader   import *
 
 
 if __name__ == "__main__":
@@ -17,23 +18,25 @@ if __name__ == "__main__":
     elif args.dataset_code == 'uk_dale':
         args.house_indicies = [1, 3, 4, 5]
         ds_parser = UK_Dale_Parser(args)
-    
-    pretrain_train,pretrain_val = ds_parser.get_petrain_datasets(args.mask_prob)
-    train_train,train_val       = ds_parser.get_train_datasets()
 
 
+    dataloader = NILMDataloader(args, ds_parser, pretrain=True)
+
+    train_loader,val_loader = dataloader.get_dataloaders()
+
+    for batch in train_loader:
+        x,y,s = batch
+        print('X Shape')
+        print(x.shape)
+        break
 
 
-    # dataloader = NILMDataloader(args, ds_parser)
-
-
-
-
-    
-   
 
     model = ELECTRICITY(args)
-    print('built Model')
+    test = model(x)
+    print('Electricity out shape:')
+    print(test[0].shape)
+
     # trainer = Trainer(args,model,stats) #is stats necessary?
 
     # #Training Loop

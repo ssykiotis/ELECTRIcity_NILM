@@ -168,7 +168,7 @@ class UK_Dale_Parser:
 
         return train, val
 
-    def get_petrain_datasets(self, mask_prob=0.25):
+    def get_pretrain_datasets(self, mask_prob=0.25):
         val_end = int(self.val_size * len(self.x))
 
         val     = NILMDataset(self.x[:val_end],
