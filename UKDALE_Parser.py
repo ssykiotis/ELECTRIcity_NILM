@@ -1,5 +1,7 @@
-import numpy  as np
-import pandas as pd
+import numpy       as     np
+import pandas      as     pd
+from   pathlib     import Path
+from   collections import defaultdict
 
 
 class UK_Dale_Parser:
@@ -46,7 +48,7 @@ class UK_Dale_Parser:
         for house_id in self.house_indicies:
             assert house_id in [1, 2, 3, 4, 5]
         
-        directory = Path(self.data_location).joinpath('uk_dale')  
+        directory = Path(self.data_location)
         
         for house_id in self.house_indicies:
             house_folder = directory.joinpath('house_' + str(house_id))
