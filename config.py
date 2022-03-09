@@ -30,15 +30,25 @@ def get_args():
     parser.add_argument('--window_size',         type = int,   default = 480)
     parser.add_argument('--window_stride',       type = int,   default = 120)
     parser.add_argument('--validation_size',     type = float, default = 0.1)
+    parser.add_argument('--batch_size',          type = int,   default = 64)
+
     
     args = parser.parse_args()
 
     # args.ukdale_location = 'data/uk_dale'
     # args.redd_location   = 'data/redd'
+
+    #MAC
     args.ukdale_location = '/Volumes/WD_2TB/PhD Datasets/Cleaned/Energy/UK_Dale'
     args.redd_location   = '/Volumes/WD_2TB/PhD Datasets/Cleaned/Energy/REDD'
 
+    #UBUNTU
+    args.ukdale_location = ''
+    args.redd_location   = ''
+
     args = update_preprocessing_parameters(args)
+    if torch.cuda.is_available():
+        args.device = 'cuda:0'
 
     return args
 
@@ -126,4 +136,7 @@ def update_preprocessing_parameters(args):
             'microwave'      : 1.,
             'dishwasher'     : 1.
         }
+
+    args.window_stride  = 120 if args.dataset_code == 'redd_lf' else 240
+    args.house_indicies = [1, 2, 3, 4, 5, 6] if args.dataset_code == 'redd_lf' else [1,2,3,4,5]
     return args
