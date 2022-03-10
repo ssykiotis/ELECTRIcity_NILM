@@ -49,11 +49,11 @@ def get_args():
 
 
     parser.add_argument('--optimizer',           type = str,   default = 'adam',    choices=['sgd', 'adam', 'adamw'])
-
-
-
-
-
+    parser.add_argument('--decay_step',          type = int,   default = 100)
+    parser.add_argument('--weight_decay',        type = float, default = 0.)
+    parser.add_argument('--gamma',               type = float, default = 0.1)  #for optimizer
+    parser.add_argument('--lr',                  type = float, default = 1e-4)
+    parser.add_argument('--enable_lr_schedule',  type = bool,  default = False)
     
     args = parser.parse_args()
 

@@ -105,7 +105,7 @@ class UK_Dale_Parser:
         entire_data[entire_data < 5] = 0 #remove very low values
         entire_data                  = entire_data.clip([0] * len(entire_data.columns), self.cutoff, axis=1) # force values to be between 0 and cutoff
         
-        return entire_data.values[:, 0], entire_data.values[:, 1:]
+        return entire_data.values[:, 0], entire_data.values[:, 1]
 
     def compute_status(self, data):
         status = np.zeros(data.shape)
