@@ -19,7 +19,7 @@ class Trainer:
         self.pretrain_num_epochs = args.pretrain_num_epochs
         self.num_epochs          = args.num_epochs
         self.model               = model.to(args.device)
-        self.export_root         =  Path(args.export_root).joinpath(args.dataset_code).joinpath(args.appliance_names[0])
+        self.export_root         =  Path(args.export_root)
         self.best_model_epoch    = None
 
         self.cutoff      = torch.tensor(args.cutoff[args.appliance_names[0]]    ).to(self.device)
@@ -41,14 +41,7 @@ class Trainer:
         if self.normalize == 'mean':
             self.x_mean, self.x_std = ds_parser.x_mean,ds_parser.x_std
             self.x_mean = torch.tensor(self.x_mean).to(self.device)
-            self.x_std  = torch.tensor(self.x_std ).to(self.device) 
-
-        self.optimizer = self._create_optimizer()
-        if args.enable_lr_schedule:
-            self.lr_scheduler = optim.lr_scheduler.StepLR(self.optimizer,
-                                                          step_size=args.decay_step,
-                                                          gamma=args.gamma
-                                                         ) 
+            self.x_std  = torch.tensor(self.x_std ).to(self.device)  
 
         self.mse      = nn.MSELoss()
         self.kl       = nn.KLDivLoss(        reduction = 'batchmean')
