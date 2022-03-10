@@ -13,19 +13,20 @@ from   metrics             import *
 
 class Trainer:
     def __init__(self,args,ds_parser,model):
-        self.args             = args
-        self.device           = args.device
-        self.num_epochs       = args.num_epochs
-        # self.ds_parser        = ds_parser
-        self.model            = model.to(args.device)
-        self.export_root      = args.export_root
-        self.best_model_epoch = None
+        self.args                = args
+        self.device              = args.device
+        self.pretrain            = args.pretrain
+        self.pretrain_num_epochs = args.pretrain_num_epochs
+        self.num_epochs          = args.num_epochs
+        self.model               = model.to(args.device)
+        self.export_root         =  Path(args.export_root)
+        self.best_model_epoch    = None
 
-        self.cutoff      = torch.Tensor(args.cutoff[args.appliance_names[0]]    ).to(self.device)
-        self.threshold   = torch.Tensor(args.threshold[args.appliance_names[0]] ).to(self.device)
-        self.min_on      = torch.Tensor(args.min_on[args.appliance_names[0]]    ).to(self.device)
-        self.min_off     = torch.Tensor(args.min_off[args.appliance_names[0]]   ).to(self.device)
-        self.C0          = torch.Tensor(args.c0[args.appliance_names[0]]        ).to(self.device)
+        self.cutoff      = torch.tensor(args.cutoff[args.appliance_names[0]]    ).to(self.device)
+        self.threshold   = torch.tensor(args.threshold[args.appliance_names[0]] ).to(self.device)
+        self.min_on      = torch.tensor(args.min_on[args.appliance_names[0]]    ).to(self.device)
+        self.min_off     = torch.tensor(args.min_off[args.appliance_names[0]]   ).to(self.device)
+        self.C0          = torch.tensor(args.c0[args.appliance_names[0]]        ).to(self.device)
         self.tau         = args.tau
 
 
@@ -39,8 +40,8 @@ class Trainer:
         self.normalize   = args.normalize
         if self.normalize == 'mean':
             self.x_mean, self.x_std = ds_parser.x_mean,ds_parser.x_std
-            self.x_mean = torch.Tensor(self.x_mean).to(self.device)
-            self.x_std  = torch.Tensor(self.x_std ).to(self.device)  
+            self.x_mean = torch.tensor(self.x_mean).to(self.device)
+            self.x_std  = torch.tensor(self.x_std ).to(self.device)  
 
         self.mse      = nn.MSELoss()
         self.kl       = nn.KLDivLoss(        reduction = 'batchmean')
@@ -176,7 +177,7 @@ class Trainer:
                 
                 y_capped = y / self.cutoff
 
-                logits, logits_y, logits_status = self.get_model_outputs(x)
+                _,_, logits_y, logits_status = self.get_model_outputs(x)
                 logits_y                        = logits_y * logits_status
 
                 acc,precision,recall,f1         = acc_precision_recall_f1_score(logits_status,status)
@@ -202,7 +203,7 @@ class Trainer:
         
                 y_capped = y / self.cutoff
 
-                logits, logits_y, logits_status = self.get_model_outputs(x)
+                _,_, logits_y, logits_status = self.get_model_outputs(x)
                 logits_y                        = logits_y * logits_status
 
                 acc,precision,recall,f1         = acc_precision_recall_f1_score(logits_status,status)

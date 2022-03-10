@@ -5,27 +5,29 @@ import random
 
 def get_args():
     parser = argparse.ArgumentParser()
-    parser.add_argument('--redd_location',   type = str, default = None)
-    parser.add_argument('--ukdale_location', type = str, default = None)
+    parser.add_argument('--redd_location',      type = str, default = None)
+    parser.add_argument('--ukdale_location',    type = str, default = None)
+    parser.add_argument('--export_root',        type = str, default = 'results')
 
-    parser.add_argument('--seed',            type = int,   default = 0)
-    parser.add_argument('--device',          type = str,   default = 'cpu' ,    choices=['cpu', 'cuda'])
 
-    parser.add_argument('--dataset_code',    type = str,   default = 'uk_dale', choices=['redd_lf', 'uk_dale'])
-    parser.add_argument('--house_indicies',  type = list,  default = [1, 2, 3, 4, 5])
+    parser.add_argument('--seed',               type = int,   default = 0)
+    parser.add_argument('--device',             type = str,   default = 'cpu' ,    choices=['cpu', 'cuda'])
+
+    parser.add_argument('--dataset_code',       type = str,   default = 'redd_lf', choices=['redd_lf', 'uk_dale'])
+    parser.add_argument('--house_indicies',     type = list,  default = [1, 2, 3, 4, 5])
 
     # REDD Dataset appliance names:    'refrigerator', 'washer_dryer',   'microwave','dishwasher'
     # UK Dale Dataset appliance names: 'fridge',       'washing_machine','microwave','dishwasher','kettle'
-    parser.add_argument('--appliance_names', type = list,  default = ['washing_machine'])
+    parser.add_argument('--appliance_names',    type = list,  default = ['washer_dryer'])
 
-    parser.add_argument('--sampling',        type = str,   default = '6s')
-    parser.add_argument('--normalize',       type = str,   default = 'mean',    choices=['mean', 'minmax'])
+    parser.add_argument('--sampling',           type = str,   default = '6s')
+    parser.add_argument('--normalize',          type = str,   default = 'mean',    choices=['mean', 'minmax'])
 
-    parser.add_argument('--c0',              type = dict,  default = None)  #temperature value for objective function
-    parser.add_argument('--cutoff',          type = dict,  default = None)
-    parser.add_argument('--threshold',       type = dict,  default = None)
-    parser.add_argument('--min_on',          type = dict,  default = None)
-    parser.add_argument('--min_off',         type = dict,  default = None)
+    parser.add_argument('--c0',                 type = dict,  default = None)  #temperature value for objective function
+    parser.add_argument('--cutoff',             type = dict,  default = None)
+    parser.add_argument('--threshold',          type = dict,  default = None)
+    parser.add_argument('--min_on',             type = dict,  default = None)
+    parser.add_argument('--min_off',            type = dict,  default = None)
 
     parser.add_argument('--window_size',         type = int,   default = 480)
     parser.add_argument('--window_stride',       type = int,   default = 120)
@@ -43,6 +45,12 @@ def get_args():
     parser.add_argument('--mask_prob',           type = float, default = 0.25)
     parser.add_argument('--pretrain_num_epochs', type = int,   default = 10)
     parser.add_argument('--num_epochs',          type = int,   default = 90)
+    parser.add_argument('--tau',                 type = float, default = 0.1)
+
+
+    parser.add_argument('--optimizer',           type = str,   default = 'adam',    choices=['sgd', 'adam', 'adamw'])
+
+
 
 
 

@@ -5,13 +5,13 @@ from REDD_Parser       import *
 from Electricity_model import *
 from NILM_Dataloader   import *
 from Trainer           import *
+from time              import time
 
 
 if __name__ == "__main__":
 
     args = get_args()
     setup_seed(args.seed)
-
 
     if args.dataset_code == 'redd_lf':
         args.house_indicies = [2, 3, 4, 5, 6]
@@ -20,28 +20,25 @@ if __name__ == "__main__":
         args.house_indicies = [1, 3, 4, 5]
         ds_parser = UK_Dale_Parser(args)
 
-
-
-
     model = ELECTRICITY(args)
 
     trainer = Trainer(args,ds_parser,model)
 
-    # #Training Loop
-    # start_time = time()
-    # if args.num_epochs > 0:
-    # try:
-    #     model.load_state_dict(torch.load(os.path.join(
-    #         args.export_root, 'best_acc_model.pth'), map_location='cpu'))
-    #     print('Successfully loaded previous model, continue training...')
-    # except FileNotFoundError:
-    #     print('Failed to load old model, continue training new model...')
-    # trainer.train()
+    #Training Loop
+    start_time = time()
+    if args.num_epochs > 0:
+        try:
+            model.load_state_dict(torch.load(os.path.join(
+                args.export_root, 'best_acc_model.pth'), map_location='cpu'))
+            print('Successfully loaded previous model, continue training...')
+        except FileNotFoundError:
+            print('Failed to load old model, continue training new model...')
+        trainer.train()
 
-    # end_time = time()
+    end_time = time()
 
-    # training_time = end_time-start_time
-    # print("Total Training Time: " + str(training_time/60) + "minutes")
+    training_time = end_time-start_time
+    print("Total Training Time: " + str(training_time/60) + "minutes")
 
     # #Testing Loop
     # args.validation_size = 1.
