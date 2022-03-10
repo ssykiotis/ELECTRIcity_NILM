@@ -19,7 +19,7 @@ class Trainer:
         self.pretrain_num_epochs = args.pretrain_num_epochs
         self.num_epochs          = args.num_epochs
         self.model               = model.to(args.device)
-        self.export_root         =  Path(args.export_root)
+        self.export_root         = Path(args.export_root).joinpath(args.dataset_code).joinpath(args.appliance_names[0])
         self.best_model_epoch    = None
 
         self.cutoff      = torch.tensor(args.cutoff[args.appliance_names[0]]    ).to(self.device)
@@ -36,6 +36,13 @@ class Trainer:
 
         dataloader     = NILMDataloader(args, ds_parser, pretrain=False)
         self.train_loader, self.val_loader = dataloader.get_dataloaders()
+
+        self.optimizer = self._create_optimizer()
+        if args.enable_lr_schedule:
+            self.lr_scheduler = optim.lr_scheduler.StepLR(self.optimizer,
+                                                          step_size=args.decay_step,
+                                                          gamma=args.gamma
+                                                         )
 
         self.normalize   = args.normalize
         if self.normalize == 'mean':
@@ -116,7 +123,7 @@ class Trainer:
 
             logits, gen_out, logits_y, logits_status    = self.get_model_outputs(x,mask)
 
-            logits_masked        = torch.masked_select(logits_y     , mask).view((-1))
+            logits_masked        = torch.masked_select(logits       , mask).view((-1))
             labels_masked        = torch.masked_select(y_capped     , mask).view((-1))
             # status_masked        = torch.masked_select(status       , mask).view((-1))
             # logits_status_masked = torch.masked_select(logits_status, mask).view((-1))
@@ -146,8 +153,8 @@ class Trainer:
             self.optimizer.zero_grad()
             y_capped = y / self.cutoff
 
-            logits, logits_y, logits_status = self.get_model_outputs(x)
-            total_loss                      = self.loss_fn(logits_y,y_capped,logits_status,status)
+            logits,_, logits_y, logits_status = self.get_model_outputs(x)
+            total_loss                      = self.loss_fn_train(logits,y_capped,logits_status,status)
             
             total_loss.backward()
             self.optimizer.step()
@@ -313,7 +320,7 @@ class Trainer:
     def _save_result(self,data,filename):
         if not os.path.exists(self.export_root):
             os.makedirs(self.export_root)
-            filepath = Path(self.export_root).joinpath(filename)
+        filepath = Path(self.export_root).joinpath(filename)
         with filepath.open('w') as f:
             json.dump(data, f, indent=2)
 

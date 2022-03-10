@@ -32,7 +32,7 @@ class UK_Dale_Parser:
                 self.x_mean = np.mean(self.x)
                 self.x_std  = np.std(self.x)
             else:
-                self.x_mean,x_std = stats
+                self.x_mean,self.x_std = stats
             self.x = (self.x - self.x_mean) / self.x_std
         elif self.normalize == 'minmax':
             if stats is None:
@@ -105,53 +105,47 @@ class UK_Dale_Parser:
         entire_data[entire_data < 5] = 0 #remove very low values
         entire_data                  = entire_data.clip([0] * len(entire_data.columns), self.cutoff, axis=1) # force values to be between 0 and cutoff
         
-        return entire_data.values[:, 0], entire_data.values[:, 1:]
+        return entire_data.values[:, 0], entire_data.values[:, 1]
 
     def compute_status(self, data):
-        status = np.zeros(data.shape)
-        if len(data.squeeze().shape) == 1:
-            columns = 1
-        else:
-            columns = data.squeeze().shape[-1]
 
-        for i in range(columns):
-            initial_status = data[:, i] >= self.threshold[i]
-            status_diff    = np.diff(initial_status)
-            events_idx     = status_diff.nonzero()
+        initial_status = data >= self.threshold[0]
+        status_diff    = np.diff(initial_status)
+        events_idx     = status_diff.nonzero()
 
-            events_idx  = np.array(events_idx).squeeze()
-            events_idx += 1
+        events_idx  = np.array(events_idx).squeeze()
+        events_idx += 1
 
-            if initial_status[0]:
-                events_idx = np.insert(events_idx, 0, 0)
+        if initial_status[0]:
+            events_idx = np.insert(events_idx, 0, 0)
 
-            if initial_status[-1]:
-                events_idx = np.insert(events_idx, events_idx.size, initial_status.size)
+        if initial_status[-1]:
+            events_idx = np.insert(events_idx, events_idx.size, initial_status.size)
 
-            events_idx     = events_idx.reshape((-1, 2))
-            on_events      = events_idx[:, 0].copy()
-            off_events     = events_idx[:, 1].copy()
+        events_idx     = events_idx.reshape((-1, 2))
+        on_events      = events_idx[:, 0].copy()
+        off_events     = events_idx[:, 1].copy()
+        assert len(on_events) == len(off_events)
+
+        if len(on_events) > 0:
+            off_duration = on_events[1:] - off_events[:-1]
+            off_duration = np.insert(off_duration, 0, 1000)
+            on_events    = on_events[off_duration > self.min_off[0]]
+            off_events   = off_events[np.roll(off_duration, -1) > self.min_off[0]]
+
+            on_duration  = off_events - on_events
+            on_events    = on_events[on_duration  >= self.min_on[0]]
+            off_events   = off_events[on_duration >= self.min_on[0]]
             assert len(on_events) == len(off_events)
 
-            if len(on_events) > 0:
-                off_duration = on_events[1:] - off_events[:-1]
-                off_duration = np.insert(off_duration, 0, 1000)
-                on_events    = on_events[off_duration > self.min_off[i]]
-                off_events   = off_events[np.roll(off_duration, -1) > self.min_off[i]]
-
-                on_duration  = off_events - on_events
-                on_events    = on_events[on_duration  >= self.min_on[i]]
-                off_events   = off_events[on_duration >= self.min_on[i]]
-                assert len(on_events) == len(off_events)
-
-            temp_status = data[:, i].copy()
-            temp_status[:] = 0
-            for on, off in zip(on_events, off_events):
-                temp_status[on: off] = 1
-            status[:, i] = temp_status
+        temp_status = data.copy()
+        temp_status[:] = 0
+        for on, off in zip(on_events, off_events):
+            temp_status[on: off] = 1
+        status = temp_status
 
         return status    
-    
+
     def get_train_datasets(self):
         val_end = int(self.val_size * len(self.x))
         

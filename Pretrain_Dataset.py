@@ -22,7 +22,7 @@ class Pretrain_Dataset(NILMDataset):
 
         for i in range(len(x)):
             prob = random.random()
-            if prob<self.mask_prob:
+            if prob<=self.mask_prob:
                 prob = random.random()
                 x[i] = -1 if prob<0.8 else np.random.normal() if prob<0.9 else x[i]
             else:

@@ -11,7 +11,7 @@ def get_args():
 
 
     parser.add_argument('--seed',               type = int,   default = 0)
-    parser.add_argument('--device',             type = str,   default = 'cpu' ,    choices=['cpu', 'cuda'])
+    parser.add_argument('--device',             type = str,   default = 'cuda:0' ,    choices=['cpu', 'cuda'])
 
     parser.add_argument('--dataset_code',       type = str,   default = 'redd_lf', choices=['redd_lf', 'uk_dale'])
     parser.add_argument('--house_indicies',     type = list,  default = [1, 2, 3, 4, 5])
@@ -32,7 +32,7 @@ def get_args():
     parser.add_argument('--window_size',         type = int,   default = 480)
     parser.add_argument('--window_stride',       type = int,   default = 120)
     parser.add_argument('--validation_size',     type = float, default = 0.1)
-    parser.add_argument('--batch_size',          type = int,   default = 64)
+    parser.add_argument('--batch_size',          type = int,   default = 16)
 
 
     parser.add_argument('--output_size',         type = int,   default = 1)
@@ -43,13 +43,17 @@ def get_args():
 
     parser.add_argument('--pretrain',            type = bool,  default = True)
     parser.add_argument('--mask_prob',           type = float, default = 0.25)
-    parser.add_argument('--pretrain_num_epochs', type = int,   default = 10)
-    parser.add_argument('--num_epochs',          type = int,   default = 90)
+    parser.add_argument('--pretrain_num_epochs', type = int,   default = 1)
+    parser.add_argument('--num_epochs',          type = int,   default = 1)
     parser.add_argument('--tau',                 type = float, default = 0.1)
 
 
     parser.add_argument('--optimizer',           type = str,   default = 'adam',    choices=['sgd', 'adam', 'adamw'])
-
+    parser.add_argument('--lr',                  type = float, default = 1e-4)
+    parser.add_argument('--enable_lr_schedule',  type = bool,  default = False)
+    parser.add_argument('--weight_decay',        type = float, default = 0.)
+    parser.add_argument('--momentum',            type = float, default = None)
+    parser.add_argument('--decay_step',          type = int,   default = 100)
 
 
 
@@ -61,12 +65,12 @@ def get_args():
     # args.redd_location   = 'data/redd'
 
     #MAC
-    args.ukdale_location = '/Volumes/WD_2TB/PhD Datasets/Cleaned/Energy/UK_Dale'
-    args.redd_location   = '/Volumes/WD_2TB/PhD Datasets/Cleaned/Energy/REDD'
+    # args.ukdale_location = '/Volumes/WD_2TB/PhD Datasets/Cleaned/Energy/UK_Dale'
+    # args.redd_location   = '/Volumes/WD_2TB/PhD Datasets/Cleaned/Energy/REDD'
 
     #UBUNTU
-    # args.ukdale_location = '/media/stavros/WD_2TB/PhD Datasets/Cleaned/Energy/UK_Dale'
-    # args.redd_location   = '/media/stavros/WD_2TB/PhD Datasets/Cleaned/Energy/REDD'
+    args.ukdale_location = '/media/stavros/WD_2TB/PhD Datasets/Cleaned/Energy/UK_Dale'
+    args.redd_location   = '/media/stavros/WD_2TB/PhD Datasets/Cleaned/Energy/REDD'
 
     args = update_preprocessing_parameters(args)
     if torch.cuda.is_available():
