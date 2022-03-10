@@ -114,7 +114,7 @@ class Redd_Parser:
             columns = data.squeeze().shape[-1]
 
         for i in range(columns):
-            initial_status = data[:, i] >= self.threshold[i]
+            initial_status = data[:, i] >= self.threshold
             status_diff    = np.diff(initial_status)
             events_idx     = status_diff.nonzero()
 
