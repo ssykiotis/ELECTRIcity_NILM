@@ -3,6 +3,7 @@ import pandas       as pd
 from   pathlib      import Path
 from   collections  import defaultdict
 from   NILM_Dataset import *
+from   Pretrain_Dataset import *
 
 
 class Redd_Parser:
@@ -150,7 +151,7 @@ class Redd_Parser:
 
         return status    
     
-    def get_datasets(self):
+    def get_train_datasets(self):
         val_end = int(self.val_size * len(self.x))
         
         train = NILMDataset(self.x[val_end:],
@@ -166,3 +167,21 @@ class Redd_Parser:
                             self.window_size) #non-overlapping windows
 
         return train, val
+
+    def get_pretrain_datasets(self, mask_prob=0.25):
+        val_end = int(self.val_size * len(self.x))
+
+        val     = NILMDataset(self.x[:val_end],
+                               self.y[:val_end],
+                               self.status[:val_end],
+                               self.window_size,
+                               self.window_size
+                             )
+        train   = Pretrain_Dataset(self.x[val_end:],
+                                   self.y[val_end:],
+                                   self.status[val_end:],
+                                   self.window_size,
+                                   self.window_stride,
+                                   mask_prob=mask_prob
+                                   )
+        return train, val        

@@ -7,12 +7,6 @@ from   Pretrain_Dataset import *
 
 
 class UK_Dale_Parser:
-    """
-    Reading UKDale dataset data.
-    Should contain:
-    x (n,)              : aggregate signal
-    y (n,num_appliances): individual device consumption signals
-    """
     
     def __init__(self,args, stats = None):
         self.data_location   = args.ukdale_location
