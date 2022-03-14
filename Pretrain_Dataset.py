@@ -4,7 +4,7 @@ import numpy as np
 from   NILM_Dataset import *
 
 class Pretrain_Dataset(NILMDataset):
-    def __init__(self, x, y, status, window_size=480, stride=30, mask_prob=0.2):
+    def __init__(self, x, y, status, window_size=480, stride=30, mask_prob=0.25):
         self.x           = x
         self.y           = y
         self.status      = status
@@ -29,6 +29,7 @@ class Pretrain_Dataset(NILMDataset):
                 y[i]      = -1
                 status[i] = -1
 
-        x, y, status = [torch.Tensor(v).unsqueeze(0) for v in [x,y,status]]
+        x, y, status = [torch.tensor(v).unsqueeze(0) for v in [x,y,status]]
         
         return  x, y, status
+

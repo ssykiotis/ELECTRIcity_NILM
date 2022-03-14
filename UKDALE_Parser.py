@@ -27,20 +27,20 @@ class UK_Dale_Parser:
         
         self.x, self.y     = self.load_data()
         
-        if self.normalize == 'mean':
-            if stats is None:
-                self.x_mean = np.mean(self.x)
-                self.x_std  = np.std(self.x)
-            else:
-                self.x_mean,self.x_std = stats
-            self.x = (self.x - self.x_mean) / self.x_std
-        elif self.normalize == 'minmax':
-            if stats is None:
-                self.x_min = min(self.x)
-                self.x_max = max(self.x)
-            else:
-                self.x_min,self.x_max = stats
-            self.x = (self.x - self.x_min)/(self.x_max-self.x_min)
+        # if self.normalize == 'mean':
+        #     if stats is None:
+        #         self.x_mean = np.mean(self.x)
+        #         self.x_std  = np.std(self.x)
+        #     else:
+        #         self.x_mean,self.x_std = stats
+        #     self.x = (self.x - self.x_mean) / self.x_std
+        # elif self.normalize == 'minmax':
+        #     if stats is None:
+        #         self.x_min = min(self.x)
+        #         self.x_max = max(self.x)
+        #     else:
+        #         self.x_min,self.x_max = stats
+        #     self.x = (self.x - self.x_min)/(self.x_max-self.x_min)
             
         self.status = self.compute_status(self.y)
     

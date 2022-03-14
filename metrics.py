@@ -6,10 +6,8 @@ from sklearn.metrics import confusion_matrix
 def acc_precision_recall_f1_score(status,status_pred):
     assert status.shape == status_pred.shape
 
-    if type(status_pred)==torch.Tensor:
-        status_pred = status_pred.detach().cpu().numpy().squeeze()
-    if type(status)==torch.Tensor:
-        status = status.detach().cpu().numpy().squeeze()    
+    status_pred = status_pred.detach().cpu().numpy().squeeze()
+    status      = status.detach().cpu().numpy().squeeze()    
 
     status      = status.reshape(status.shape[0], -1)
     status_pred = status_pred.reshape(status_pred.shape[0],-1)
@@ -32,10 +30,8 @@ def acc_precision_recall_f1_score(status,status_pred):
 
 def regression_errors(pred, label):
     assert pred.shape == label.shape
-    if type(pred)==torch.Tensor:
-        pred = pred.detach().cpu().numpy().squeeze()
-    if type(label)==torch.Tensor:
-        label = label.detach().cpu().numpy().squeeze()  
+    pred = pred.detach().cpu().numpy().squeeze()
+    label = label.detach().cpu().numpy().squeeze()  
 
     pred     = pred.reshape(pred.shape[0],-1)
     label    = label.reshape(label.shape[0],-1)

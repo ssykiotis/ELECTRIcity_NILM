@@ -214,12 +214,12 @@ class Trainer:
                 logits_y                        = logits_y * logits_status
 
                 acc,precision,recall,f1         = acc_precision_recall_f1_score(logits_status,status)
-                mae, mre                        = regression_errors(logits_y, y)
+                mae, mre                        = regression_errors(logits_y, y_capped)
                 self.update_metrics_dict(mae,mre,acc,precision,recall,f1, mode = 'test')
 
-                acc_mean     = np.mean(np.concatenate(self.val_metrics_dict['acc']).reshape(-1))
-                f1_mean      = np.mean(np.concatenate(self.val_metrics_dict['f1'] ).reshape(-1))
-                mre_mean     = np.mean(np.concatenate(self.val_metrics_dict['mre']).reshape(-1))
+                acc_mean     = np.mean(np.concatenate(self.test_metrics_dict['acc']).reshape(-1))
+                f1_mean      = np.mean(np.concatenate(self.test_metrics_dict['f1'] ).reshape(-1))
+                mre_mean     = np.mean(np.concatenate(self.test_metrics_dict['mre']).reshape(-1))
                 tqdm_dataloader.set_description('Test, rel_err {:.2f}, acc {:.2f}, f1 {:.2f}'.format(mre_mean, acc_mean, f1_mean))
 
                 y_pred_curve.append(logits_y.detach().cpu().numpy().squeeze())

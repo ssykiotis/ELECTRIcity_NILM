@@ -22,9 +22,9 @@ class NILMDataset(data_utils.Dataset):
         y        = self.padding_seqs(self.y[start_index: end_index])
         status   = self.padding_seqs(self.status[start_index: end_index])
         
-        x        = torch.Tensor(x).view((1,-1))
-        y        = torch.Tensor(y).view((1,-1))
-        status   = torch.Tensor(status).view((1,-1))
+        x        = torch.tensor(x).view((1,-1))
+        y        = torch.tensor(y).view((1,-1))
+        status   = torch.tensor(status).view((1,-1))
         
         return x, y, status 
 
