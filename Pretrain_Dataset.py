@@ -29,7 +29,9 @@ class Pretrain_Dataset(NILMDataset):
                 y[i]      = -1
                 status[i] = -1
 
-        x, y, status = [torch.tensor(v).unsqueeze(0) for v in [x,y,status]]
+        x        = torch.tensor(x).view((1,-1))
+        y        = torch.tensor(y).view((1,-1))
+        status   = torch.tensor(status).view((1,-1))
         
         return  x, y, status
 

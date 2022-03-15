@@ -13,7 +13,7 @@ def get_args():
     parser.add_argument('--seed',               type = int,   default = 1)
     parser.add_argument('--device',             type = str,   default = 'cpu' ,    choices=['cpu', 'cuda'])
 
-    parser.add_argument('--dataset_code',       type = str,   default = 'uk_dale', choices=['redd_lf', 'uk_dale'])
+    parser.add_argument('--dataset_code',       type = str,   default = 'redd_lf', choices=['redd_lf', 'uk_dale'])
     parser.add_argument('--house_indicies',     type = list,  default = [1, 2, 3, 4, 5])
 
     # REDD Dataset appliance names:    'refrigerator', 'washer_dryer',   'microwave','dishwasher'
@@ -21,7 +21,7 @@ def get_args():
     parser.add_argument('--appliance_names',    type = list,  default = ['microwave'])
 
     parser.add_argument('--sampling',           type = str,   default = '6s')
-    parser.add_argument('--normalize',          type = str,   default = 'mean',    choices=['mean', 'minmax'])
+    parser.add_argument('--normalize',          type = str,   default = 'mean',    choices=['mean', 'minmax','none'])
 
     parser.add_argument('--c0',                 type = dict,  default = None)  #temperature value for objective function
     parser.add_argument('--cutoff',             type = dict,  default = None)
@@ -61,12 +61,12 @@ def get_args():
     
     args = parser.parse_args()
 
-    args.ukdale_location = 'data/uk_dale'
-    args.redd_location   = 'data/redd'
+    # args.ukdale_location = 'data/uk_dale'
+    # args.redd_location   = 'data/redd'
 
     #MAC
-    # args.ukdale_location = '/Volumes/WD_2TB/PhD Datasets/Cleaned/Energy/UK_Dale'
-    # args.redd_location   = '/Volumes/WD_2TB/PhD Datasets/Cleaned/Energy/REDD'
+    args.ukdale_location = '/Volumes/WD_2TB/PhD Datasets/Cleaned/Energy/UK_Dale'
+    args.redd_location   = '/Volumes/WD_2TB/PhD Datasets/Cleaned/Energy/REDD'
 
     #UBUNTU
     # args.ukdale_location = '/media/stavros/WD_2TB/PhD Datasets/Cleaned/Energy/UK_Dale'
