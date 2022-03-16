@@ -27,20 +27,20 @@ class UK_Dale_Parser:
         
         self.x, self.y     = self.load_data()
         
-        # if self.normalize == 'mean':
-        #     if stats is None:
-        #         self.x_mean = np.mean(self.x)
-        #         self.x_std  = np.std(self.x)
-        #     else:
-        #         self.x_mean,self.x_std = stats
-        #     self.x = (self.x - self.x_mean) / self.x_std
-        # elif self.normalize == 'minmax':
-        #     if stats is None:
-        #         self.x_min = min(self.x)
-        #         self.x_max = max(self.x)
-        #     else:
-        #         self.x_min,self.x_max = stats
-        #     self.x = (self.x - self.x_min)/(self.x_max-self.x_min)
+        if self.normalize == 'mean':
+            if stats is None:
+                self.x_mean = np.mean(self.x)
+                self.x_std  = np.std(self.x)
+            else:
+                self.x_mean,self.x_std = stats
+            self.x = (self.x - self.x_mean) / self.x_std
+        elif self.normalize == 'minmax':
+            if stats is None:
+                self.x_min = min(self.x)
+                self.x_max = max(self.x)
+            else:
+                self.x_min,self.x_max = stats
+            self.x = (self.x - self.x_min)/(self.x_max-self.x_min)
             
         self.status = self.compute_status(self.y)
     
@@ -149,34 +149,35 @@ class UK_Dale_Parser:
     def get_train_datasets(self):
         val_end = int(self.val_size * len(self.x))
         
+        val = NILMDataset(self.x[:val_end],
+                          self.y[:val_end],
+                          self.status[:val_end],
+                          self.window_size,
+                          self.window_size    #non-overlapping windows
+                          )
+
         train = NILMDataset(self.x[val_end:],
                             self.y[val_end:],
                             self.status[val_end:],
                             self.window_size,
-                            self.window_stride)
-        
-        val   = NILMDataset(self.x[:val_end],
-                            self.y[:val_end],
-                            self.status[:val_end],
-                            self.window_size,
-                            self.window_size) #non-overlapping windows
-
+                            self.window_stride
+                            )
         return train, val
 
     def get_pretrain_datasets(self, mask_prob=0.25):
         val_end = int(self.val_size * len(self.x))
 
-        val     = NILMDataset(self.x[:val_end],
-                               self.y[:val_end],
-                               self.status[:val_end],
-                               self.window_size,
-                               self.window_size
-                             )
-        train   = Pretrain_Dataset(self.x[val_end:],
-                                   self.y[val_end:],
-                                   self.status[val_end:],
-                                   self.window_size,
-                                   self.window_stride,
-                                   mask_prob=mask_prob
-                                   )
-        return train, val        
+        val  = NILMDataset(self.x[:val_end],
+                           self.y[:val_end],
+                           self.status[:val_end],
+                           self.window_size,
+                           self.window_size
+                          )
+        train = Pretrain_Dataset(self.x[val_end:],
+                                 self.y[val_end:],
+                                 self.status[val_end:],
+                                 self.window_size,
+                                 self.window_stride,
+                                 mask_prob=mask_prob
+                                )
+        return train, val

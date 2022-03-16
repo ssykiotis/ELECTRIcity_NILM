@@ -16,9 +16,9 @@ class Pretrain_Dataset(NILMDataset):
         start_index = index * self.stride
         end_index   = np.min((len(self.x), index * self.stride + self.window_size))
        
-        x       = self.padding_seqs(self.x[start_index: end_index])
-        y       = self.padding_seqs(self.y[start_index: end_index])
-        status  = self.padding_seqs(self.status[start_index: end_index])
+        x       = self.padding_seqs(self.x[start_index: end_index]).copy()
+        y       = self.padding_seqs(self.y[start_index: end_index]).copy()
+        status  = self.padding_seqs(self.status[start_index: end_index]).copy()
 
         for i in range(len(x)):
             prob = random.random()

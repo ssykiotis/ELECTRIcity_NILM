@@ -32,7 +32,7 @@ def get_args():
     parser.add_argument('--window_size',         type = int,   default = 480)
     parser.add_argument('--window_stride',       type = int,   default = 120)
     parser.add_argument('--validation_size',     type = float, default = 0.1)
-    parser.add_argument('--batch_size',          type = int,   default = 8)
+    parser.add_argument('--batch_size',          type = int,   default = 4)
 
 
     parser.add_argument('--output_size',         type = int,   default = 1)
@@ -65,12 +65,12 @@ def get_args():
     # args.redd_location   = 'data/redd'
 
     #MAC
-    args.ukdale_location = '/Volumes/WD_2TB/PhD Datasets/Cleaned/Energy/UK_Dale'
-    args.redd_location   = '/Volumes/WD_2TB/PhD Datasets/Cleaned/Energy/REDD'
+    # args.ukdale_location = '/Volumes/WD_2TB/PhD Datasets/Cleaned/Energy/UK_Dale'
+    # args.redd_location   = '/Volumes/WD_2TB/PhD Datasets/Cleaned/Energy/REDD'
 
     #UBUNTU
-    # args.ukdale_location = '/media/stavros/WD_2TB/PhD Datasets/Cleaned/Energy/UK_Dale'
-    # args.redd_location   = '/media/stavros/WD_2TB/PhD Datasets/Cleaned/Energy/REDD'
+    args.ukdale_location = '/media/stavros/WD_2TB/PhD Datasets/Cleaned/Energy/UK_Dale'
+    args.redd_location   = '/media/stavros/WD_2TB/PhD Datasets/Cleaned/Energy/REDD'
 
     args = update_preprocessing_parameters(args)
     if torch.cuda.is_available():
