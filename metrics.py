@@ -6,9 +6,9 @@ from sklearn.metrics import confusion_matrix
 def acc_precision_recall_f1_score(status,status_pred):
     assert status.shape == status_pred.shape
     
-    if type(status!=np.ndarray):
+    if type(status)!=np.ndarray:
         status = status.detach().cpu().numpy().squeeze()   
-    if type(status_pred!=np.ndarray): 
+    if type(status_pred)!=np.ndarray: 
         status_pred = status_pred.detach().cpu().numpy().squeeze()
     
 
@@ -34,9 +34,9 @@ def acc_precision_recall_f1_score(status,status_pred):
 def regression_errors(pred, label):
     assert pred.shape == label.shape
     
-    if type(pred!=np.ndarray):
+    if type(pred)!=np.ndarray:
         pred = pred.detach().cpu().numpy().squeeze()
-    if type(label!=np.ndarray):
+    if type(label)!=np.ndarray:
         label = label.detach().cpu().numpy().squeeze()  
 
     pred     = pred.reshape(pred.shape[0],-1)
