@@ -5,6 +5,7 @@ torch.set_default_tensor_type(torch.DoubleTensor)
 from   config            import *
 from   UKDALE_Parser     import *
 from   REDD_Parser       import *
+from   Refit_Parser      import *
 from   Electricity_model import *
 from   NILM_Dataloader   import *
 from   Trainer           import *
@@ -24,6 +25,10 @@ if __name__ == "__main__":
     elif args.dataset_code == 'uk_dale':
         args.house_indicies = [1, 3, 4, 5]
         ds_parser = UK_Dale_Parser(args)
+    elif args.dataset_code == 'refit':
+        args.house_indicies = [2,3,16]
+        args.sampling = '7s'
+        ds_parser = Refit_Parser(args)
 
     model = ELECTRICITY(args)
     
@@ -55,6 +60,10 @@ if __name__ == "__main__":
     elif args.dataset_code == 'uk_dale':
         args.house_indicies = [2]
         ds_parser = UK_Dale_Parser(args, stats)
+    elif args.dataset_code == 'refit':
+        args.house_indicies = [5]
+        ds_parser = Refit_Parser(args)
+
 
     dataloader = NILMDataloader(args, ds_parser)
     _, test_loader = dataloader.get_dataloaders()

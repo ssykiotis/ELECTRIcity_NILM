@@ -14,13 +14,13 @@ def get_args():
     parser.add_argument('--seed',               type = int,   default = 0)
     parser.add_argument('--device',             type = str,   default = 'cpu' ,    choices=['cpu', 'cuda'])
 
-    parser.add_argument('--dataset_code',       type = str,   default = 'uk_dale', choices=['redd_lf', 'uk_dale','refit'])
+    parser.add_argument('--dataset_code',       type = str,   default = 'refit', choices=['redd_lf', 'uk_dale','refit'])
     parser.add_argument('--house_indicies',     type = list,  default = [1, 2, 3, 4, 5])
 
     # REDD Dataset appliance names:    'refrigerator', 'washer_dryer',   'microwave','dishwasher'
     # UK Dale Dataset appliance names: 'fridge',       'washing_machine','microwave','dishwasher','kettle','toaster'
     #Refit Dataset appliance names:    'Fridge,        'Washing_Machine','Microwave',Dishwasher,'Kettle'
-    parser.add_argument('--appliance_names',    type = list,  default = ['toaster'])
+    parser.add_argument('--appliance_names',    type = list,  default = ['Washing_Machine'])
 
     parser.add_argument('--sampling',           type = str,   default = '6s')
     parser.add_argument('--normalize',          type = str,   default = 'mean',    choices=['mean', 'minmax','none'])
@@ -146,7 +146,6 @@ def update_preprocessing_parameters(args):
             'toaster'        : 1000
 
         }
-        #multiply by 6 for seconds
         args.min_on = {
             'kettle'         : 2,
             'fridge'         : 10,
@@ -156,7 +155,6 @@ def update_preprocessing_parameters(args):
             'toaster'        : 2000
 
         }
-        #multiply by 6 for seconds
         args.min_off = {
             'kettle'         : 0,
             'fridge'         : 2,
@@ -175,7 +173,51 @@ def update_preprocessing_parameters(args):
             'toaster'        : 1.
 
         }
+    elif args.dataset_code == 'refit':    
+        args.cutoff = {
+            'Aggregate'      : 10000,
+            'Kettle'         : 3000,
+            'Fridge-Freezer' : 1700,
+            'Washing_Machine': 2500,
+            'Microwave'      : 1300,
+            'Dishwasher'     : 2500,
+            'TV'             : 80
+        }
+        args.threshold = {
+            'Kettle'         : 2000,
+            'Fridge-Freezer' : 5,
+            'Washing_Machine': 20,
+            'Microwave'      : 200,
+            'Dishwasher'     : 10,
+            'TV'             : 10
+        }
+        #multiply by 6 for seconds
+        args.min_on = {
+            'Kettle'         : 2,
+            'Fridge-Freezer' : 10,
+            'Washing_Machine': 10,
+            'Microwave'      : 2,
+            'Dishwasher'     : 300,
+            'TV'             : 2
+        }
+        #multiply by 6 for seconds
+        args.min_off = {
+            'Kettle'         : 0,
+            'Fridge-Freezer' : 2,
+            'Washing_Machine': 26,
+            'Microwave'      : 5,
+            'Dishwasher'     : 300,
+            'TV'             : 0
+        }
+        args.c0 = {
+            'Kettle'         : 1.,
+            'Fridge-Freezer' : 1e-6,
+            'Washing_Machine': 0.01,
+            'Microwave'      : 1.,
+            'Dishwasher'     : 1.,
+            'TV'             : 1.
+        }
 
-    args.window_stride  = 120 if args.dataset_code == 'redd_lf' else 240
-    args.house_indicies = [1, 2, 3, 4, 5, 6] if args.dataset_code == 'redd_lf' else [1,2,3,4,5]
+    args.window_stride  = 120 if args.dataset_code == 'redd_lf' else 240 
+    args.house_indicies = [1, 2, 3, 4, 5, 6] if args.dataset_code == 'redd_lf' else [1,2,3,4,5] if args.dataset_code =='uk_dale' else [1,2,3,4,5,6,7,8,9,10,11,12,13,14,15,16,17,18,19,20,21]
     return args
