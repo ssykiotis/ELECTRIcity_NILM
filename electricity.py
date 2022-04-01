@@ -26,7 +26,8 @@ if __name__ == "__main__":
         args.house_indicies = [1, 3, 4, 5]
         ds_parser = UK_Dale_Parser(args)
     elif args.dataset_code == 'refit':
-        args.house_indices = [2,3,16]
+        args.house_indicies = [2,3,16]
+        args.sampling = '7s'
         ds_parser = Refit_Parser(args)
 
     model = ELECTRICITY(args)

@@ -54,15 +54,22 @@ class Refit_Parser:
             with open(self.labels_location/labelname) as f:
                 house_labels = f.readlines()
 
+            house_labels = ['Time'] + house_labels[0].split(',')
+
             if self.appliance_names[0] in house_labels:
                 house_data = pd.read_csv(house_data_loc)
                 house_data['Unix'] = pd.to_datetime(house_data['Unix'], unit = 's')
 
-                house_labels = ['Time'] + house_labels[0].split(',')
                 house_data         = house_data.drop(labels = ['Time'],axis = 1)
                 house_data.columns = house_labels
                 house_data = house_data.set_index('Time')
-                print(house_data.head())
+
+                idx_to_drop = house_data[house_data['Issues']==1].index
+                house_data = house_data.drop(index = idx_to_drop, axis = 0)
+                house_data = house_data['Aggregate',self.appliance_names[0]]
+                house_data = house_data.resample(self.sampling).mean().fillna(method='ffill', limit=30)
+
+
         return None,None
 
 
