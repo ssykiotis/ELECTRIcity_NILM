@@ -7,18 +7,20 @@ def get_args():
     parser = argparse.ArgumentParser()
     parser.add_argument('--redd_location',      type = str, default = None)
     parser.add_argument('--ukdale_location',    type = str, default = None)
+    parser.add_argument('--refit_location',     type = str, default = None)
     parser.add_argument('--export_root',        type = str, default = 'results')
 
 
-    parser.add_argument('--seed',               type = int,   default = 1)
+    parser.add_argument('--seed',               type = int,   default = 0)
     parser.add_argument('--device',             type = str,   default = 'cpu' ,    choices=['cpu', 'cuda'])
 
-    parser.add_argument('--dataset_code',       type = str,   default = 'redd_lf', choices=['redd_lf', 'uk_dale'])
+    parser.add_argument('--dataset_code',       type = str,   default = 'uk_dale', choices=['redd_lf', 'uk_dale','refit'])
     parser.add_argument('--house_indicies',     type = list,  default = [1, 2, 3, 4, 5])
 
     # REDD Dataset appliance names:    'refrigerator', 'washer_dryer',   'microwave','dishwasher'
-    # UK Dale Dataset appliance names: 'fridge',       'washing_machine','microwave','dishwasher','kettle'
-    parser.add_argument('--appliance_names',    type = list,  default = ['microwave'])
+    # UK Dale Dataset appliance names: 'fridge',       'washing_machine','microwave','dishwasher','kettle','toaster'
+    #Refit Dataset appliance names:    'Fridge,        'Washing_Machine','Microwave',Dishwasher,'Kettle'
+    parser.add_argument('--appliance_names',    type = list,  default = ['toaster'])
 
     parser.add_argument('--sampling',           type = str,   default = '6s')
     parser.add_argument('--normalize',          type = str,   default = 'mean',    choices=['mean', 'minmax','none'])
@@ -32,7 +34,7 @@ def get_args():
     parser.add_argument('--window_size',         type = int,   default = 480)
     parser.add_argument('--window_stride',       type = int,   default = 120)
     parser.add_argument('--validation_size',     type = float, default = 0.1)
-    parser.add_argument('--batch_size',          type = int,   default = 4)
+    parser.add_argument('--batch_size',          type = int,   default = 64)
 
 
     parser.add_argument('--output_size',         type = int,   default = 1)
@@ -43,8 +45,8 @@ def get_args():
 
     parser.add_argument('--pretrain',            type = bool,  default = True)
     parser.add_argument('--mask_prob',           type = float, default = 0.25)
-    parser.add_argument('--pretrain_num_epochs', type = int,   default = 5)
-    parser.add_argument('--num_epochs',          type = int,   default = 95)
+    parser.add_argument('--pretrain_num_epochs', type = int,   default = 10)
+    parser.add_argument('--num_epochs',          type = int,   default = 90)
     parser.add_argument('--tau',                 type = float, default = 0.1)
 
 
@@ -71,6 +73,8 @@ def get_args():
     #UBUNTU
     args.ukdale_location = '/media/stavros/WD_2TB/PhD Datasets/Cleaned/Energy/UK_Dale'
     args.redd_location   = '/media/stavros/WD_2TB/PhD Datasets/Cleaned/Energy/REDD'
+    args.refit_location  = '/media/stavros/WD_2TB/PhD Datasets/To Clean/REFIT/Clean_Refit'
+
 
     args = update_preprocessing_parameters(args)
     if torch.cuda.is_available():
