@@ -10,7 +10,7 @@ def get_args():
     parser.add_argument('--export_root',        type = str, default = 'results')
 
 
-    parser.add_argument('--seed',               type = int,   default = 1)
+    parser.add_argument('--seed',               type = int,   default = 0)
     parser.add_argument('--device',             type = str,   default = 'cpu' ,    choices=['cpu', 'cuda'])
 
     parser.add_argument('--dataset_code',       type = str,   default = 'redd_lf', choices=['redd_lf', 'uk_dale'])
@@ -32,7 +32,7 @@ def get_args():
     parser.add_argument('--window_size',         type = int,   default = 480)
     parser.add_argument('--window_stride',       type = int,   default = 120)
     parser.add_argument('--validation_size',     type = float, default = 0.1)
-    parser.add_argument('--batch_size',          type = int,   default = 4)
+    parser.add_argument('--batch_size',          type = int,   default = 64)
 
 
     parser.add_argument('--output_size',         type = int,   default = 1)
@@ -43,8 +43,8 @@ def get_args():
 
     parser.add_argument('--pretrain',            type = bool,  default = True)
     parser.add_argument('--mask_prob',           type = float, default = 0.25)
-    parser.add_argument('--pretrain_num_epochs', type = int,   default = 5)
-    parser.add_argument('--num_epochs',          type = int,   default = 95)
+    parser.add_argument('--pretrain_num_epochs', type = int,   default = 10)
+    parser.add_argument('--num_epochs',          type = int,   default = 90)
     parser.add_argument('--tau',                 type = float, default = 0.1)
 
 
