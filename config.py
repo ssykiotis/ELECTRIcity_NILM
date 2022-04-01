@@ -7,13 +7,14 @@ def get_args():
     parser = argparse.ArgumentParser()
     parser.add_argument('--redd_location',      type = str, default = None)
     parser.add_argument('--ukdale_location',    type = str, default = None)
+    parser.add_argument('--refit_location',     type = str, default = None)
     parser.add_argument('--export_root',        type = str, default = 'results')
 
 
     parser.add_argument('--seed',               type = int,   default = 0)
     parser.add_argument('--device',             type = str,   default = 'cpu' ,    choices=['cpu', 'cuda'])
 
-    parser.add_argument('--dataset_code',       type = str,   default = 'redd_lf', choices=['redd_lf', 'uk_dale'])
+    parser.add_argument('--dataset_code',       type = str,   default = 'refit', choices=['redd_lf', 'uk_dale','refit'])
     parser.add_argument('--house_indicies',     type = list,  default = [1, 2, 3, 4, 5])
 
     # REDD Dataset appliance names:    'refrigerator', 'washer_dryer',   'microwave','dishwasher'
@@ -71,6 +72,8 @@ def get_args():
     #UBUNTU
     args.ukdale_location = '/media/stavros/WD_2TB/PhD Datasets/Cleaned/Energy/UK_Dale'
     args.redd_location   = '/media/stavros/WD_2TB/PhD Datasets/Cleaned/Energy/REDD'
+    args.refit_location  = '/media/stavros/WD_2TB/PhD Datasets/To Clean/REFIT/Clean_Refit'
+
 
     args = update_preprocessing_parameters(args)
     if torch.cuda.is_available():
