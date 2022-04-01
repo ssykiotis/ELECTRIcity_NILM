@@ -134,14 +134,17 @@ def update_preprocessing_parameters(args):
             'fridge'         : 300,
             'washing_machine': 2500,
             'microwave'      : 3000,
-            'dishwasher'     : 2500
+            'dishwasher'     : 2500,
+            'toaster'        : 3100
         }
         args.threshold = {
             'kettle'         : 2000,
             'fridge'         : 50,
             'washing_machine': 20,
             'microwave'      : 200,
-            'dishwasher'     : 10
+            'dishwasher'     : 10,
+            'toaster'        : 1000
+
         }
         #multiply by 6 for seconds
         args.min_on = {
@@ -149,7 +152,9 @@ def update_preprocessing_parameters(args):
             'fridge'         : 10,
             'washing_machine': 300,
             'microwave'      : 2,
-            'dishwasher'     : 300
+            'dishwasher'     : 300,
+            'toaster'        : 2000
+
         }
         #multiply by 6 for seconds
         args.min_off = {
@@ -157,14 +162,18 @@ def update_preprocessing_parameters(args):
             'fridge'         : 2,
             'washing_machine': 26,
             'microwave'      : 5,
-            'dishwasher'     : 300
+            'dishwasher'     : 300,
+            'toaster'        : 0
+
         }
         args.c0 = {
             'kettle'         : 1.,
             'fridge'         : 1e-6,
             'washing_machine': 0.01,
             'microwave'      : 1.,
-            'dishwasher'     : 1.
+            'dishwasher'     : 1.,
+            'toaster'        : 1.
+
         }
 
     args.window_stride  = 120 if args.dataset_code == 'redd_lf' else 240
