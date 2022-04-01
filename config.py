@@ -34,7 +34,7 @@ def get_args():
     parser.add_argument('--window_size',         type = int,   default = 480)
     parser.add_argument('--window_stride',       type = int,   default = 120)
     parser.add_argument('--validation_size',     type = float, default = 0.1)
-    parser.add_argument('--batch_size',          type = int,   default = 64)
+    parser.add_argument('--batch_size',          type = int,   default = 4)
 
 
     parser.add_argument('--output_size',         type = int,   default = 1)
@@ -143,7 +143,6 @@ def update_preprocessing_parameters(args):
             'microwave'      : 200,
             'dishwasher'     : 10
         }
-        #multiply by 6 for seconds
         args.min_on = {
             'kettle'         : 2,
             'fridge'         : 10,
@@ -151,7 +150,6 @@ def update_preprocessing_parameters(args):
             'microwave'      : 2,
             'dishwasher'     : 300
         }
-        #multiply by 6 for seconds
         args.min_off = {
             'kettle'         : 0,
             'fridge'         : 2,
@@ -171,7 +169,7 @@ def update_preprocessing_parameters(args):
             'Aggregate'      : 10000,
             'Kettle'         : 3000,
             'Fridge-Freezer' : 1700,
-            'Washing_machine': 2500,
+            'Washing_Machine': 2500,
             'Microwave'      : 1300,
             'Dishwasher'     : 2500,
             'TV'             : 80
@@ -179,7 +177,7 @@ def update_preprocessing_parameters(args):
         args.threshold = {
             'Kettle'         : 2000,
             'Fridge-Freezer' : 5,
-            'Washing_machine': 20,
+            'Washing_Machine': 20,
             'Microwave'      : 200,
             'Dishwasher'     : 10,
             'TV'             : 10
@@ -188,7 +186,7 @@ def update_preprocessing_parameters(args):
         args.min_on = {
             'Kettle'         : 2,
             'Fridge-Freezer' : 10,
-            'Washing_machine': 10,
+            'Washing_Machine': 10,
             'Microwave'      : 2,
             'Dishwasher'     : 300,
             'TV'             : 2
@@ -197,7 +195,7 @@ def update_preprocessing_parameters(args):
         args.min_off = {
             'Kettle'         : 0,
             'Fridge-Freezer' : 2,
-            'Washing_machine': 26,
+            'Washing_Machine': 26,
             'Microwave'      : 5,
             'Dishwasher'     : 300,
             'TV'             : 0
@@ -205,12 +203,12 @@ def update_preprocessing_parameters(args):
         args.c0 = {
             'Kettle'         : 1.,
             'Fridge-Freezer' : 1e-6,
-            'Washing_machine': 0.01,
+            'Washing_Machine': 0.01,
             'Microwave'      : 1.,
             'Dishwasher'     : 1.,
             'TV'             : 1.
         }
 
-    args.window_stride  = 120 if args.dataset_code == 'redd_lf' else 240
-    args.house_indicies = [1, 2, 3, 4, 5, 6] if args.dataset_code == 'redd_lf' else [1,2,3,4,5]
+    args.window_stride  = 120 if args.dataset_code == 'redd_lf' else 240 
+    args.house_indicies = [1, 2, 3, 4, 5, 6] if args.dataset_code == 'redd_lf' else [1,2,3,4,5] if args.dataset_code =='uk_dale' else [1,2,3,4,5,6,7,8,9,10,11,12,13,14,15,16,17,18,19,20,21]
     return args

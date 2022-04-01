@@ -60,6 +60,10 @@ if __name__ == "__main__":
     elif args.dataset_code == 'uk_dale':
         args.house_indicies = [2]
         ds_parser = UK_Dale_Parser(args, stats)
+    elif args.dataset_code == 'refit':
+        args.house_indicies = [5]
+        ds_parser = Refit_Parser(args)
+
 
     dataloader = NILMDataloader(args, ds_parser)
     _, test_loader = dataloader.get_dataloaders()
