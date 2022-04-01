@@ -18,7 +18,7 @@ def get_args():
     parser.add_argument('--house_indicies',     type = list,  default = [1, 2, 3, 4, 5])
 
     # REDD Dataset appliance names:    'refrigerator', 'washer_dryer',   'microwave','dishwasher'
-    # UK Dale Dataset appliance names: 'fridge',       'washing_machine','microwave','dishwasher','kettle'
+    # UK Dale Dataset appliance names: 'fridge',       'washing_machine','microwave','dishwasher','kettle','toaster'
     #Refit Dataset appliance names:    'Fridge,        'Washing_Machine','Microwave',Dishwasher,'Kettle'
     parser.add_argument('--appliance_names',    type = list,  default = ['Washing_Machine'])
 
@@ -34,7 +34,7 @@ def get_args():
     parser.add_argument('--window_size',         type = int,   default = 480)
     parser.add_argument('--window_stride',       type = int,   default = 120)
     parser.add_argument('--validation_size',     type = float, default = 0.1)
-    parser.add_argument('--batch_size',          type = int,   default = 4)
+    parser.add_argument('--batch_size',          type = int,   default = 64)
 
 
     parser.add_argument('--output_size',         type = int,   default = 1)
@@ -134,35 +134,44 @@ def update_preprocessing_parameters(args):
             'fridge'         : 300,
             'washing_machine': 2500,
             'microwave'      : 3000,
-            'dishwasher'     : 2500
+            'dishwasher'     : 2500,
+            'toaster'        : 3100
         }
         args.threshold = {
             'kettle'         : 2000,
             'fridge'         : 50,
             'washing_machine': 20,
             'microwave'      : 200,
-            'dishwasher'     : 10
+            'dishwasher'     : 10,
+            'toaster'        : 1000
+
         }
         args.min_on = {
             'kettle'         : 2,
             'fridge'         : 10,
             'washing_machine': 300,
             'microwave'      : 2,
-            'dishwasher'     : 300
+            'dishwasher'     : 300,
+            'toaster'        : 2000
+
         }
         args.min_off = {
             'kettle'         : 0,
             'fridge'         : 2,
             'washing_machine': 26,
             'microwave'      : 5,
-            'dishwasher'     : 300
+            'dishwasher'     : 300,
+            'toaster'        : 0
+
         }
         args.c0 = {
             'kettle'         : 1.,
             'fridge'         : 1e-6,
             'washing_machine': 0.01,
             'microwave'      : 1.,
-            'dishwasher'     : 1.
+            'dishwasher'     : 1.,
+            'toaster'        : 1.
+
         }
     elif args.dataset_code == 'refit':    
         args.cutoff = {

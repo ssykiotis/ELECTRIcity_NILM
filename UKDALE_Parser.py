@@ -47,7 +47,7 @@ class UK_Dale_Parser:
     def load_data(self):
         
         for appliance in self.appliance_names:
-            assert appliance in ['dishwasher', 'fridge','microwave', 'washing_machine', 'kettle']
+            assert appliance in ['dishwasher', 'fridge','microwave', 'washing_machine', 'kettle','toaster']
         
         for house_id in self.house_indicies:
             assert house_id in [1, 2, 3, 4, 5]
