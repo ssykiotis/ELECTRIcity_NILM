@@ -166,6 +166,50 @@ def update_preprocessing_parameters(args):
             'microwave'      : 1.,
             'dishwasher'     : 1.
         }
+    elif args.dataset_code == 'refit':    
+        args.cutoff = {
+            'Aggregate'      : 10000,
+            'Kettle'         : 3000,
+            'Fridge-Freezer' : 1700,
+            'Washing_machine': 2500,
+            'Microwave'      : 1300,
+            'Dishwasher'     : 2500,
+            'TV'             : 80
+        }
+        args.threshold = {
+            'Kettle'         : 2000,
+            'Fridge-Freezer' : 5,
+            'Washing_machine': 20,
+            'Microwave'      : 200,
+            'Dishwasher'     : 10,
+            'TV'             : 10
+        }
+        #multiply by 6 for seconds
+        args.min_on = {
+            'Kettle'         : 2,
+            'Fridge-Freezer' : 10,
+            'Washing_machine': 10,
+            'Microwave'      : 2,
+            'Dishwasher'     : 300,
+            'TV'             : 2
+        }
+        #multiply by 6 for seconds
+        args.min_off = {
+            'Kettle'         : 0,
+            'Fridge-Freezer' : 2,
+            'Washing_machine': 26,
+            'Microwave'      : 5,
+            'Dishwasher'     : 300,
+            'TV'             : 0
+        }
+        args.c0 = {
+            'Kettle'         : 1.,
+            'Fridge-Freezer' : 1e-6,
+            'Washing_machine': 0.01,
+            'Microwave'      : 1.,
+            'Dishwasher'     : 1.,
+            'TV'             : 1.
+        }
 
     args.window_stride  = 120 if args.dataset_code == 'redd_lf' else 240
     args.house_indicies = [1, 2, 3, 4, 5, 6] if args.dataset_code == 'redd_lf' else [1,2,3,4,5]
