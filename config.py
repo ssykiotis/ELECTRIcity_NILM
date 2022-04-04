@@ -67,13 +67,14 @@ def get_args():
     # args.redd_location   = 'data/redd'
 
     #MAC
-    # args.ukdale_location = '/Volumes/WD_2TB/PhD Datasets/Cleaned/Energy/UK_Dale'
-    # args.redd_location   = '/Volumes/WD_2TB/PhD Datasets/Cleaned/Energy/REDD'
+    args.ukdale_location = '/Volumes/WD_2TB/PhD Datasets/Cleaned/Energy/UK_Dale'
+    args.redd_location   = '/Volumes/WD_2TB/PhD Datasets/Cleaned/Energy/REDD'
+    args.refit_location  = '/Volumes/WD_2TB/PhD Datasets/To Clean/REFIT/Clean_Refit'
 
     #UBUNTU
-    args.ukdale_location = '/media/stavros/WD_2TB/PhD Datasets/Cleaned/Energy/UK_Dale'
-    args.redd_location   = '/media/stavros/WD_2TB/PhD Datasets/Cleaned/Energy/REDD'
-    args.refit_location  = '/media/stavros/WD_2TB/PhD Datasets/To Clean/REFIT/Clean_Refit'
+#     args.ukdale_location = '/media/stavros/WD_2TB/PhD Datasets/Cleaned/Energy/UK_Dale'
+#     args.redd_location   = '/media/stavros/WD_2TB/PhD Datasets/Cleaned/Energy/REDD'
+#     args.refit_location  = '/media/stavros/WD_2TB/PhD Datasets/To Clean/REFIT/Clean_Refit'
 
 
     args = update_preprocessing_parameters(args)

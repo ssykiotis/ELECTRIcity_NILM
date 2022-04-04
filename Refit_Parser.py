@@ -25,7 +25,6 @@ class Refit_Parser:
         self.min_on        =  [args.min_on[appl]    for appl in args.appliance_names]
         self.min_off       =  [args.min_off[appl]   for appl in args.appliance_names]
 
-
         self.val_size      =  args.validation_size
         self.window_size   =  args.window_size
         self.window_stride =  args.window_stride
