@@ -9,36 +9,36 @@ The csv datasets could be downloaded here: [REDD](http://redd.csail.mit.edu/), [
 For Refit, we used a slightly different folder structure. We have created .txt files with columns labels that are required during data processing. Please place the .csv files in the Data Folder for the code to work.
 
 The folder structure in the data folder should be:
-data/
-    UK_Dale/
-            House_1/
-                    .
-                    .
-                    .
-            House_2/
-                    .
-                    .
-                    .
-    REDD/
-          House_1/
-                  .
-                  .
-                  .
-          House_2/
-                  .
-                  .
-                  .
-    Refit
-        Data/
-                House2.csv
-                House3.csv
-                House5.csv
-                House16.csv
-        Labels/
-                House2.txt
-                House3.txt
-                House5.txt
-                House16.txt
+
+.
+├── ...
+├── data                   
+│──────── UK_Dale 
+│            ├──House_1
+│            |     .
+│            |     . 
+│            |──House_2
+│            |    .
+│            |    .
+│   ├──  REDD
+│            ├──House_1
+│            |     .
+│            |     . 
+│            |──House_2
+│            |    .
+│            |    .         
+│   └──  Refit
+│          ├──Data
+│               House2.csv
+│               House3.csv
+│               House5.csv
+│               House16.csv
+│          ├──Labels
+│               House2.txt
+│               House3.txt
+│               House5.txt
+│               House16.txt
+└── 
 
 ## Training
 
