@@ -63,9 +63,10 @@ def get_args():
     
     args = parser.parse_args()
 
-    args.ukdale_location = 'data/uk_dale'
-    args.redd_location   = 'data/redd'
-    args.refit_location  = 'data/refit'
+    args.ukdale_location = 'data/UK_Dale'
+    args.redd_location   = 'data/REDD'
+    args.refit_location  = 'data/Refit'
+
 
     args = update_preprocessing_parameters(args)
     if torch.cuda.is_available():
@@ -206,7 +207,7 @@ def update_preprocessing_parameters(args):
             'Washing_Machine': 0.01,
             'Microwave'      : 1.,
             'Dishwasher'     : 1.,
-            'TV'             : 1.5
+            'TV'             : 1.
         }
 
     args.window_stride  = 120 if args.dataset_code == 'redd_lf' else 240 
