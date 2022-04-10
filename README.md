@@ -1,5 +1,4 @@
 # ELECTRIcity
-# BERT4NILM
 
 Pytorch implementation of ELECTRIcity: An efficient Transformer for Non-Intrusive Load Monitoring.
 
@@ -43,9 +42,7 @@ data/
 
 ## Training
 
-This repository provides the end-to-end pipeline to train a model using ELECTRIcity. The following figure provides an overview of ELECTRIcity's training procedure:
-
-<img src=electricity_high_level_view.jpg width=1000>
+This repository provides the end-to-end pipeline to train a model using ELECTRIcity. 
 
 
 The required packages to run the code can be found in electricity.yml. Model training and testing can be done by running the electricity.py python file. 
