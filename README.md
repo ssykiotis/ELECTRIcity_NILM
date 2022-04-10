@@ -45,7 +45,7 @@ data/
 
 This repository provides the end-to-end pipeline to train a model using ELECTRIcity. The following figure provides an overview of ELECTRIcity's training procedure:
 
-<img src=electricity_high_level_view.jpg width=500>
+<img src=electricity_high_level_view.jpg width=1000>
 
 
 The required packages to run the code can be found in electricity.yml. Model training and testing can be done by running the electricity.py python file. 
@@ -68,15 +68,15 @@ Our models are trained for 100 epochs for every appliance in each dataset, with 
 
 ### UK_Dale
 
-<img src=results_uk_dale.png width=500>
+<img src=results_uk_dale.png width=1000>
 
 ### REDD
 
-<img src=results_redd.png width=500>
+<img src=results_redd.png width=1000>
 
 ### Refit
 
-<img src=results_refit.png width=500>
+<img src=results_refit.png width=1000>
 
 
 ## Citing 
