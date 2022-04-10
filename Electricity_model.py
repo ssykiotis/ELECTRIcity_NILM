@@ -47,6 +47,7 @@ class TransformerModel(nn.Module):
     
     def forward(self, sequence):
         x_token   = self.pool(self.conv(sequence)).permute(0, 2, 1)
+        
         embedding = x_token + self.position(sequence)
         x = self.dropout(self.layer_norm(embedding))
 
@@ -59,7 +60,7 @@ class TransformerModel(nn.Module):
         x = self.linear2(x).permute(0,2,1)
         return x
 
-#TODO: unsqueeze to add dimension at 1
+
 
 
 
