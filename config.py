@@ -19,10 +19,10 @@ def get_args():
 
     # REDD Dataset appliance names:    'refrigerator', 'washer_dryer',   'microwave','dishwasher'
     # UK Dale Dataset appliance names: 'fridge',       'washing_machine','microwave','dishwasher','kettle','toaster'
-    #Refit Dataset appliance names:    'Fridge,        'Washing_Machine','Microwave',Dishwasher,'Kettle'
+    #Refit Dataset appliance names:    'Fridge,        'Washing_Machine','TV'
     parser.add_argument('--appliance_names',    type = list,  default = ['Washing_Machine'])
 
-    parser.add_argument('--sampling',           type = str,   default = '7s')
+    parser.add_argument('--sampling',           type = str,   default = '6s')
     parser.add_argument('--normalize',          type = str,   default = 'mean',    choices=['mean', 'minmax','none'])
 
     parser.add_argument('--c0',                 type = dict,  default = None)  #temperature value for objective function
@@ -63,19 +63,9 @@ def get_args():
     
     args = parser.parse_args()
 
-    # args.ukdale_location = 'data/uk_dale'
-    # args.redd_location   = 'data/redd'
-
-    #MAC
-    args.ukdale_location = '/Volumes/WD_2TB/PhD Datasets/Cleaned/Energy/UK_Dale'
-    args.redd_location   = '/Volumes/WD_2TB/PhD Datasets/Cleaned/Energy/REDD'
-    args.refit_location  = '/Volumes/WD_2TB/PhD Datasets/To Clean/REFIT/Clean_Refit'
-
-    #UBUNTU
-#     args.ukdale_location = '/media/stavros/WD_2TB/PhD Datasets/Cleaned/Energy/UK_Dale'
-#     args.redd_location   = '/media/stavros/WD_2TB/PhD Datasets/Cleaned/Energy/REDD'
-#     args.refit_location  = '/media/stavros/WD_2TB/PhD Datasets/To Clean/REFIT/Clean_Refit'
-
+    args.ukdale_location = 'data/uk_dale'
+    args.redd_location   = 'data/redd'
+    args.refit_location  = 'data/refit'
 
     args = update_preprocessing_parameters(args)
     if torch.cuda.is_available():
@@ -216,7 +206,7 @@ def update_preprocessing_parameters(args):
             'Washing_Machine': 0.01,
             'Microwave'      : 1.,
             'Dishwasher'     : 1.,
-            'TV'             : 1.
+            'TV'             : 1.5
         }
 
     args.window_stride  = 120 if args.dataset_code == 'redd_lf' else 240 
