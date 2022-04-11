@@ -79,12 +79,19 @@ Our models are trained for 100 epochs for every appliance in each dataset, with 
 ## Citing 
 Please cite the following paper if you use our methods in your research:
 ```
-@inproceedings{yue2020bert4nilm,
-  title={BERT4NILM: A Bidirectional Transformer Model for Non-Intrusive Load Monitoring},
-  author={Yue, Zhenrui and Witzig, Camilo Requena and Jorde, Daniel and Jacobsen, Hans-Arno},
-  booktitle={Proceedings of the 5th International Workshop on Non-Intrusive Load Monitoring},
-  pages={89--93},
-  year={2020}
+
+@Article{s22082926,
+AUTHOR = {Sykiotis, Stavros and Kaselimi, Maria and Doulamis, Anastasios and Doulamis, Nikolaos},
+TITLE = {ELECTRIcity: An Efficient Transformer for Non-Intrusive Load Monitoring},
+JOURNAL = {Sensors},
+VOLUME = {22},
+YEAR = {2022},
+NUMBER = {8},
+ARTICLE-NUMBER = {2926},
+URL = {https://www.mdpi.com/1424-8220/22/8/2926},
+ISSN = {1424-8220},
+ABSTRACT = {Non-Intrusive Load Monitoring (NILM) describes the process of inferring the consumption pattern of appliances by only having access to the aggregated household signal. Sequence-to-sequence deep learning models have been firmly established as state-of-the-art approaches for NILM, in an attempt to identify the pattern of the appliance power consumption signal into the aggregated power signal. Exceeding the limitations of recurrent models that have been widely used in sequential modeling, this paper proposes a transformer-based architecture for NILM. Our approach, called ELECTRIcity, utilizes transformer layers to accurately estimate the power signal of domestic appliances by relying entirely on attention mechanisms to extract global dependencies between the aggregate and the domestic appliance signals. Another additive value of the proposed model is that ELECTRIcity works with minimal dataset pre-processing and without requiring data balancing. Furthermore, ELECTRIcity introduces an efficient training routine compared to other traditional transformer-based architectures. According to this routine, ELECTRIcity splits model training into unsupervised pre-training and downstream task fine-tuning, which yields performance increases in both predictive accuracy and training time decrease. Experimental results indicate ELECTRIcity&rsquo;s superiority compared to several state-of-the-art methods.},
+DOI = {10.3390/s22082926}
 }
 ```
 
