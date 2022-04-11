@@ -1,6 +1,6 @@
 # ELECTRIcity
 
-Pytorch implementation of ELECTRIcity: An efficient Transformer for Non-Intrusive Load Monitoring.
+Pytorch implementation of ELECTRIcity: An efficient Transformer for Non-Intrusive Load Monitoring. For any questions, feel free to contact me at stasykiotis@mail.ntua.gr
 
 ## Data
 
