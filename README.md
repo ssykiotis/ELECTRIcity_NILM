@@ -17,8 +17,8 @@ The folder structure in the data folder should be:
       │       │    ├── .
       │       │    └── .
       │       └──House_2
-      │           .
-      │           .
+      │             .
+      │             .
       └── REDD
       │       └──House_1
       │       │    ├── .
