@@ -13,31 +13,31 @@ The folder structure in the data folder should be:
 .
 ├── data                   
       └── UK_Dale 
-      │      └──House_1
-      │      │    ├── .
-      │      │    └── .
-│            └──House_2
-│            │    .
-│            │    .
-│──────── REDD
-│            ├──House_1
-│            |     .
-│            |     . 
-│            |──House_2
-│            │    .
-│            │    .         
-│───────  Refit
-│          ├──Data
-│               House2.csv
-│               House3.csv
-│               House5.csv
-│               House16.csv
-│          ├──Labels
-│               House2.txt
-│               House3.txt
-│               House5.txt
-│               House16.txt
-└── 
+      │       └──House_1
+      │       │    ├── .
+      │       │    └── .
+      │       └──House_2
+      │           .
+      │           .
+      └── REDD
+      │       └──House_1
+      │       │    ├── .
+      │       │    └── .
+      │       └──House_2
+      │           .
+      │           .   
+      └── Refit
+            └──Data
+            │  House2.csv
+            │  House3.csv
+            │  House5.csv
+            │  House16.csv
+            └──Labels
+               House2.txt
+               House3.txt
+               House5.txt
+               House16.txt
+
 ```
 ## Training
 
