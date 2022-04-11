@@ -15,19 +15,19 @@ The folder structure in the data folder should be:
 ├── data                   
 │──────── UK_Dale 
 │            ├──House_1
-│            |     .
-│            |     . 
-│            |──House_2
-│            |    .
-│            |    .
-│   ├──  REDD
+│            │     .
+│            │     . 
+│            │──House_2
+│            │    .
+│            │    .
+│──────── REDD
 │            ├──House_1
 │            |     .
 │            |     . 
 │            |──House_2
-│            |    .
-│            |    .         
-│   └──  Refit
+│            │    .
+│            │    .         
+│───────  Refit
 │          ├──Data
 │               House2.csv
 │               House3.csv
