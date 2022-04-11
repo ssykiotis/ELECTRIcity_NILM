@@ -24,8 +24,8 @@ The folder structure in the data folder should be:
       │       │    ├── .
       │       │    └── .
       │       └──House_2
-      │           .
-      │           .   
+      │            ├── .
+      │            └── .   
       └── Refit
             └──Data
             │  House2.csv
