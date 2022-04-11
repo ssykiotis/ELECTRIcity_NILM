@@ -11,7 +11,6 @@ For Refit, we used a slightly different folder structure. We have created .txt f
 The folder structure in the data folder should be:
 
 .
-├── ...
 ├── data                   
 │──────── UK_Dale 
 │            ├──House_1
